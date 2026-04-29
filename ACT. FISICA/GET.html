@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCSC - Salud y Deporte</title>
+    
+    <link rel="icon" type="image/png" href="escudo_UCSC.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Style.css">
+</head>    
+<body>
+
+    <header class="header-ucsc">
+        <div class="header-content">
+            <div class="header-left">
+                <img src="escudo_UCSC.png" alt="Escudo UCSC" class="img-escudo">
+            </div>
+            <div class="header-right">
+                <span class="dept-title">DPTO. ACTIVIDAD FÍSICA Y SALUD</span>
+                <span class="sede-title">LOS ÁNGELES</span>
+            </div>
+        </div>
+        <div class="red-line"></div>
+    </header>
+
+    <nav class="quick-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Inicio</a>
+            <div class="nav-divider"></div>
+            <a href="GEB.html" class="nav-item">GEB</a>
+            <a href="GET.html" class="nav-item active">GET</a>
+            <a href="METs.html" class="nav-item">METs</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="main-title">Gasto Energético Total (GET)</h1>
+        <p class="sub-title">Aplica el factor de actividad física sobre tu GEB base</p>
+        
+        <div class="card-selection animate-in">
+            <div class="group">
+                <label><i class="fas fa-fire-alt"></i> GEB Previamente Calculado (kcal)</label>
+                <input type="number" id="geb_base" placeholder="Ej: 1600" step="0.1">
+            </div>
+
+            <div class="group">
+                <label><i class="fas fa-walking"></i> Nivel de Actividad Física (FA)</label>
+                <select id="fa">
+                    <option value="1.2">Sedentario (1.2) - Poco o nada de ejercicio</option>
+                    <option value="1.375">Ligero (1.375) - Ejercicio 1-3 días/sem</option>
+                    <option value="1.55">Moderado (1.55) - Ejercicio 3-5 días/sem</option>
+                    <option value="1.725">Intenso (1.725) - Ejercicio 6-7 días/sem</option>
+                    <option value="1.9">Muy Intenso (1.9) - Atleta o trabajo físico</option>
+                </select>
+            </div>
+
+            <button class="btn-primary" onclick="calcularGET()">
+                <i class="fas fa-calculator"></i> Calcular GET Final
+            </button>
+
+            <div id="resultado" class="manual-result" style="display: none; margin-top: 25px;">
+                <span class="result-label">Gasto Diario Estimado</span>
+                <div id="valor" style="font-size: 3.5rem; font-weight: 900; color: var(--accent); line-height: 1; margin: 10px 0;">0</div>
+                <small style="color: #64748b; font-weight: bold; text-transform: uppercase;">kcal totales / día</small>
+                
+                <hr style="margin: 20px 0; opacity: 0.1;">
+                
+                <a href="METs.html" class="btn-primary" style="text-decoration: none; display: block; background: var(--ucsc-blue);">
+                    Paso 3: Compendio METs <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function calcularGET() {
+            const geb = parseFloat(document.getElementById('geb_base').value);
+            const fa = parseFloat(document.getElementById('fa').value);
+            const resDiv = document.getElementById('resultado');
+            const valorSpan = document.getElementById('valor');
+
+            if(!geb || geb <= 0) {
+                alert("Por favor, ingresa un valor de GEB válido.");
+                return;
+            }
+            
+            const total = geb * fa;
+            
+            // Mostrar resultado con redondeo
+            valorSpan.innerText = Math.round(total);
+            resDiv.style.display = 'block';
+            
+            // Reiniciar animación si ya estaba visible
+            resDiv.style.animation = 'none';
+            resDiv.offsetHeight; 
+            resDiv.style.animation = 'fadeIn 0.5s ease-out';
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCSC - Salud y Deporte</title>
+    
+    <link rel="icon" type="image/png" href="escudo_UCSC.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Style.css">
+</head>    
+<body>
+
+    <header class="header-ucsc">
+        <div class="header-content">
+            <div class="header-left">
+                <img src="escudo_UCSC.png" alt="Escudo UCSC" class="img-escudo">
+            </div>
+            <div class="header-right">
+                <span class="dept-title">DPTO. ACTIVIDAD FÍSICA Y SALUD</span>
+                <span class="sede-title">LOS ÁNGELES</span>
+            </div>
+        </div>
+        <div class="red-line"></div>
+    </header>
+
+    <nav class="quick-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Inicio</a>
+            <div class="nav-divider"></div>
+            <a href="GEB.html" class="nav-item">GEB</a>
+            <a href="GET.html" class="nav-item">GET</a>
+            <a href="METs.html" class="nav-item active">METs</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="main-title">Compendio de Actividades Físicas</h1>
+        <p class="sub-title">Calcula y acumula tu gasto calórico diario</p>
+
+        <div class="card-selection animate-in">
+            <div class="group">
+                <label><i class="fas fa-layer-group"></i> Categoría General</label>
+                <select id="cat_select" onchange="actualizarActividades()">
+                    <option value="">-- Seleccionar Categoría --</option>
+                </select>
+            </div>
+
+            <div class="group">
+                <label><i class="fas fa-running"></i> Actividad Específica</label>
+                <select id="act_select" disabled onchange="rellenarDatosAuto()">
+                    <option value="">-- Selecciona Categoría Primero --</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="group">
+                    <label>Código ID</label>
+                    <input type="text" id="auto_codigo" readonly placeholder="---">
+                </div>
+                <div class="group">
+                    <label>Valor MET</label>
+                    <input type="text" id="auto_met" readonly placeholder="---">
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="group">
+                    <label>Peso Corporal (kg)</label>
+                    <input type="number" id="input_peso" placeholder="Ej: 75">
+                </div>
+                <div class="group">
+                    <label>Tiempo (minutos)</label>
+                    <input type="number" id="input_tiempo" placeholder="Ej: 30">
+                </div>
+            </div>
+
+            <button class="btn-primary" onclick="agregarAlDashboard()">
+                <i class="fas fa-plus-circle"></i> Calcular y Añadir
+            </button>
+        </div>
+
+        <div class="dashboard-container">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> Dashboard de Resultados</h2>
+            <div class="table-responsive">
+                <table class="dashboard-table" id="tabla-dashboard">
+                    <thead>
+                        <tr>
+                            <th>Código</th>
+                            <th>Actividad</th>
+                            <th>METs</th>
+                            <th>Kcal</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+                    <tbody></tbody>
+                </table>
+            </div>
+            <div class="total-box">
+                <span>Total Acumulado:</span>
+                <strong id="suma-total">0.0</strong> <small>kcal</small>
+            </div>
+        </div>
+
+        <div class="card-selection manual-card">
+            <h3 class="manual-title"><i class="fas fa-calculator"></i> Calculadora Manual de METs</h3>
+            <p class="manual-desc">Suma valores MET específicos de forma directa.</p>
+            
+            <div class="manual-grid">
+                <div class="group">
+                    <label>Valor MET a sumar</label>
+                    <input type="number" id="input_suma_manual" step="0.1" placeholder="Ej: 8.5">
+                </div>
+                <button class="btn-secondary" onclick="sumarMetManual()">Sumar +</button>
+            </div>
+
+            <div class="manual-result">
+                <span class="result-label">METs Acumulados</span>
+                <div id="total_mets_manual">0.0</div>
+                <button class="btn-reset" onclick="resetSumaManual()">Reiniciar contador</button>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center;">
+            <a href="index.html" class="nav-link btn-back" style="display: inline-flex; justify-content: center; width: auto; padding: 15px 30px;">
+                <i class="fas fa-check-double"></i> Finalizar y Volver al Inicio
+            </a>
+        </div>
+    </main>
+
+    <script src="Datos-met.js"></script>
+    <script src="Logic_METs.js"></script>
+</body>
+</html>

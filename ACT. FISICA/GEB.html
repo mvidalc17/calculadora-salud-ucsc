@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UCSC - Salud y Deporte</title>
+    
+    <link rel="icon" type="image/png" href="escudo_UCSC.png">
+    
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="Style.css">
+</head>    
+<body>
+
+    <header class="header-ucsc">
+        <div class="header-content">
+            <div class="header-left">
+                <img src="escudo_UCSC.png" alt="Escudo UCSC" class="img-escudo">
+            </div>
+            <div class="header-right">
+                <span class="dept-title">DPTO. ACTIVIDAD FÍSICA Y SALUD</span>
+                <span class="sede-title">LOS ÁNGELES</span>
+            </div>
+        </div>
+        <div class="red-line"></div>
+    </header>
+
+    <nav class="quick-nav">
+        <div class="nav-container">
+            <a href="index.html" class="nav-item"><i class="fas fa-home"></i> Inicio</a>
+            <div class="nav-divider"></div>
+            <a href="GEB.html" class="nav-item active">GEB</a>
+            <a href="GET.html" class="nav-item">GET</a>
+            <a href="METs.html" class="nav-item">METs</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <h1 class="main-title">Gasto Energético Basal (GEB)</h1>
+        <p class="sub-title">Ecuación de Harris-Benedict: Energía mínima en reposo.</p>
+        
+        <div class="card-selection animate-in">
+            <div class="group">
+                <label><i class="fas fa-venus-mars"></i> Sexo Biológico</label>
+                <select id="sexo">
+                    <option value="H">Hombre</option>
+                    <option value="M">Mujer</option>
+                </select>
+            </div>
+
+            <div class="form-row">
+                <div class="group">
+                    <label><i class="fas fa-weight"></i> Peso (kg)</label>
+                    <input type="number" id="peso" placeholder="Ej: 70">
+                </div>
+                <div class="group">
+                    <label><i class="fas fa-arrows-alt-v"></i> Talla (cm)</label>
+                    <input type="number" id="talla" placeholder="Ej: 170">
+                </div>
+            </div>
+
+            <div class="group">
+                <label><i class="fas fa-calendar-alt"></i> Edad (años)</label>
+                <input type="number" id="edad" placeholder="Ej: 25">
+            </div>
+
+            <button class="btn-primary" onclick="calcularGEB()">
+                <i class="fas fa-calculator"></i> Calcular GEB
+            </button>
+
+            <div id="resultado" class="manual-result" style="display: none; margin-top: 25px;">
+                <span class="result-label">Resultado GEB Estimado</span>
+                <div id="valor" style="font-size: 3.5rem; font-weight: 900; color: var(--accent); line-height: 1; margin: 10px 0;">0</div>
+                <small style="color: #64748b; font-weight: bold; text-transform: uppercase;">kcal / día</small>
+                
+                <hr style="margin: 20px 0; opacity: 0.1;">
+                <a href="GET.html" class="btn-primary" style="text-decoration: none; display: block; background: var(--ucsc-blue);">
+                    Paso 2: Calcular GET <i class="fas fa-arrow-right"></i>
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <script>
+        function calcularGEB() {
+            const sexo = document.getElementById('sexo').value;
+            const p = parseFloat(document.getElementById('peso').value);
+            const t = parseFloat(document.getElementById('talla').value);
+            const e = parseFloat(document.getElementById('edad').value);
+            const resDiv = document.getElementById('resultado');
+            const valorSpan = document.getElementById('valor');
+
+            if(!p || !t || !e) {
+                alert("Por favor, completa todos los datos (Peso, Talla y Edad).");
+                return;
+            }
+
+            let geb = 0;
+            if(sexo === 'H') {
+                geb = 66.5 + (13.75 * p) + (5.003 * t) - (6.75 * e);
+            } else {
+                geb = 655.1 + (9.563 * p) + (1.850 * t) - (4.676 * e);
+            }
+
+            valorSpan.innerText = Math.round(geb);
+            resDiv.style.display = 'block';
+            
+            resDiv.style.animation = 'none';
+            resDiv.offsetHeight; 
+            resDiv.style.animation = 'fadeIn 0.5s ease-out';
+        }
+    </script>
+</body>
+</html>
